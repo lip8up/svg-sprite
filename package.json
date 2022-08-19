@@ -1,0 +1,61 @@
+{
+  "name": "svg-sprite",
+  "version": "1.6.6",
+  "description": "svg sprite from a dir",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": "git@github.com:lip8up/svg-sprite.git",
+  "author": "lip8up <lip8up@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "pnpm unbuild --stub",
+    "build": "pnpm unbuild",
+    "prepublishOnly": "npm run build",
+    "prepack": "pnpm unbuild",
+    "test": "jest tests"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
+    "normalize-path": "^3.0.0",
+    "pathe": "^0.3.5",
+    "svg-baker": "^1.7.0",
+    "svgo": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^28.1.7",
+    "@types/normalize-path": "^3.0.0",
+    "@types/svgo": "^2.6.4",
+    "jest": "^28.1.3",
+    "lint-staged": "^13.0.3",
+    "ts-jest": "^28.0.8",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4",
+    "unbuild": "^0.8.9",
+    "yorkie": "^2.0.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "yarn test",
+      "git add"
+    ]
+  }
+}
