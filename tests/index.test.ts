@@ -1,9 +1,10 @@
 import { resolve } from 'pathe'
-import { scanDir } from '../src'
+import { scanDir, FileStats } from '../src'
 
 test('scanDir', async () => {
   const iconDir = resolve(process.cwd(), 'tests/icons')
-  const { svgHtml, html, idSet } = await scanDir(iconDir)
+  const cache = new Map<string, FileStats>()
+  const { svgHtml, html, idSet } = await scanDir(iconDir, cache)
 
   expect(/id="icon-add"/.test(svgHtml)).toBeTruthy()
   expect(/id="icon-inner-talk"/.test(svgHtml)).toBeTruthy()

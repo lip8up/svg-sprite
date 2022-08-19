@@ -6,7 +6,7 @@ import normalizePath from 'normalize-path'
 // @ts-ignore
 import SVGCompiler from 'svg-baker-update'
 
-interface FileStats {
+export interface FileStats {
   relativeName: string
   mtimeMs?: number
   code: string
@@ -30,8 +30,7 @@ export interface ScanDirOptions {
 const XMLNS = 'http://www.w3.org/2000/svg'
 const XMLNS_LINK = 'http://www.w3.org/1999/xlink'
 
-export const scanDir = async (iconDir: string, options?: ScanDirOptions) => {
-  const cache = new Map<string, FileStats>()
+export const scanDir = async (iconDir: string, cache: Map<string, FileStats>, options?: ScanDirOptions) => {
   const { svgoOptions, symbolIdTemplate } = {
     symbolIdTemplate: 'icon-[dir]-[name]',
     svgoOptions: true,
