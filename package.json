@@ -1,6 +1,6 @@
 {
   "name": "svg-sprite-scan",
-  "version": "1.9.19",
+  "version": "1.99.9",
   "description": "svg sprite from a dir",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",

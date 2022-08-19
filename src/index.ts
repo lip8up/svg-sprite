@@ -18,7 +18,7 @@ export interface ScanDirOptions {
    * icon format
    * @default: icon-[dir]-[name]
    */
-  symbolIdTemplate?: string
+  symbolId?: string
 
   /**
    * svgo configuration, used to compress svg
@@ -31,26 +31,24 @@ const XMLNS = 'http://www.w3.org/2000/svg'
 const XMLNS_LINK = 'http://www.w3.org/1999/xlink'
 
 export const scanDir = async (iconDir: string, cache: Map<string, FileStats>, options?: ScanDirOptions) => {
-  const { svgoOptions, symbolIdTemplate } = {
-    symbolIdTemplate: 'icon-[dir]-[name]',
+  const { svgoOptions, symbolId } = {
+    symbolId: 'icon-[dir]-[name]',
     svgoOptions: true,
     ...options
   }
   const { insertHtml, idSet } = await compilerIcons(
     cache,
     iconDir,
-    symbolIdTemplate,
+    symbolId,
     typeof svgoOptions === 'boolean' ? {} : svgoOptions
   )
 
   const xmlns = `xmlns="${XMLNS}"`
   const xmlnsLink = `xmlns:xlink="${XMLNS_LINK}"`
-  const html = insertHtml
-    .replace(new RegExp(xmlns, 'g'), '')
-    .replace(new RegExp(xmlnsLink, 'g'), '')
+  const html = insertHtml.replace(new RegExp(xmlns, 'g'), '').replace(new RegExp(xmlnsLink, 'g'), '')
 
   // @prettier-ignore
-  const svgHtml = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:link="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">${html}</svg>`
+  const svgHtml = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:link="http://www.w3.org/1999/xlink">${html}</svg>`
   return { svgHtml, html, idSet }
 }
 
@@ -107,11 +105,7 @@ const compilerIcons = async (
   return { insertHtml, idSet }
 }
 
-const compilerIcon = async (
-  file: string,
-  symbolId: string,
-  svgoOptions: OptimizeOptions
-): Promise<string | null> => {
+const compilerIcon = async (file: string, symbolId: string, svgoOptions: OptimizeOptions): Promise<string | null> => {
   if (!file) {
     return null
   }
@@ -131,12 +125,12 @@ const compilerIcon = async (
   return svgSymbol.render()
 }
 
-const createSymbolId = (name: string, symbolIdTemplate: string) => {
-  let id = symbolIdTemplate
+const createSymbolId = (name: string, symbolId: string) => {
+  let id = symbolId
   let fName = name
 
   const { fileName = '', dirName } = discreteDir(name)
-  if (symbolIdTemplate.includes('[dir]')) {
+  if (symbolId.includes('[dir]')) {
     id = id.replace(/\[dir\]/g, dirName)
     if (!dirName) {
       id = id.replace('--', '-')
