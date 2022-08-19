@@ -4,7 +4,7 @@ import { extname } from 'pathe'
 import { optimize, OptimizedSvg, OptimizeOptions } from 'svgo'
 import normalizePath from 'normalize-path'
 // @ts-ignore
-import SVGCompiler from 'svg-baker'
+import SVGCompiler from 'svg-baker-update'
 
 interface FileStats {
   relativeName: string
